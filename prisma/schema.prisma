@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres.iqdmkshaehglhndippnf:xiaomei0212@aws-1-us-east-2.pooler.supabase.com:5432/postgres"
+}
+
+model Article {
+  id                String          @id @default(cuid())
+  title             String
+  content           String
+  originalContent   String
+  translatedContent String
+  difficulty        String          // "simple", "medium", "hard"
+  source            String
+  sourceUrl         String
+  publishDate       DateTime
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  readingTime       Int
+  wordCount         Int
+  isPublished       Boolean         @default(true)
+  tags              String          // JSON string of tags array
+
+  @@map("articles")
+}
+
+// enum DifficultyLevel {
+//   simple
+//   medium
+//   hard
+// }
+
+model Settings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model ScheduleLog {
+  id           String   @id @default(cuid())
+  taskType     String
+  status       String   // success, error, running
+  message      String?
+  newArticles  Int      @default(0)
+  duration     Int?     // execution time in milliseconds
+  createdAt    DateTime @default(now())
+
+  @@map("schedule_logs")
+}

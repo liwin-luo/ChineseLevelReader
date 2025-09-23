@@ -1,0 +1,81 @@
+{
+  "name": "中文分级阅读 - Chinese Level Reader",
+  "short_name": "中文阅读",
+  "description": "专为英语母语者设计的中文分级阅读平台，通过AI智能分级和双语对照，帮助您循序渐进地提高中文水平。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["education", "books", "reference"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "首页截图"
+    },
+    {
+      "src": "/screenshot-narrow.png", 
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "移动端截图"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "简单级别文章",
+      "short_name": "简单",
+      "description": "浏览简单级别的中文文章",
+      "url": "/articles?difficulty=simple",
+      "icons": [
+        {
+          "src": "/shortcut-simple.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "中等级别文章", 
+      "short_name": "中等",
+      "description": "浏览中等级别的中文文章",
+      "url": "/articles?difficulty=medium",
+      "icons": [
+        {
+          "src": "/shortcut-medium.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "困难级别文章",
+      "short_name": "困难", 
+      "description": "浏览困难级别的中文文章",
+      "url": "/articles?difficulty=hard",
+      "icons": [
+        {
+          "src": "/shortcut-hard.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
