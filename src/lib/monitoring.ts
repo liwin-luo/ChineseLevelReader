@@ -15,8 +15,7 @@ export class PerformanceMonitor {
     
     this.isInitialized = true;
     
-    // 导入 web-vitals 并开始监控
-    this.importWebVitals();
+    // Web Vitals 监控已关闭（避免依赖 web-vitals）
     
     // 监控自定义指标
     this.monitorCustomMetrics();
@@ -32,20 +31,8 @@ export class PerformanceMonitor {
    * 动态导入 web-vitals
    */
   private static async importWebVitals() {
-    try {
-      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals');
-      
-      // Core Web Vitals
-      getCLS(this.sendMetric.bind(this, 'CLS'));
-      getFID(this.sendMetric.bind(this, 'FID'));
-      getLCP(this.sendMetric.bind(this, 'LCP'));
-      
-      // 其他有用指标
-      getFCP(this.sendMetric.bind(this, 'FCP'));
-      getTTFB(this.sendMetric.bind(this, 'TTFB'));
-    } catch (error) {
-      console.warn('Web Vitals 加载失败:', error);
-    }
+    // noop: web-vitals disabled for MVP
+    return;
   }
 
   /**
@@ -274,9 +261,9 @@ export class PerformanceMonitor {
     return {
       webVitals: metrics,
       navigation: {
-        domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
-        load: navigation.loadEventEnd - navigation.loadEventStart,
-        domComplete: navigation.domComplete - navigation.navigationStart
+        domContentLoaded: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
+        load: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
+        domComplete: Math.round(navigation.domComplete - navigation.startTime)
       },
       paint: paint.reduce((acc, entry) => {
         acc[entry.name] = Math.round(entry.startTime);
@@ -493,4 +480,4 @@ export const initializeMonitoring = () => {
     PerformanceMonitor.initialize();
     UserAnalytics.initialize();
   }, 1000);
-};"
+};

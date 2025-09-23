@@ -82,40 +82,40 @@ export default function PWAInstallPrompt({ onInstall, onDismiss }: PWAInstallPro
   }
 
   return (
-    <div className=\"fixed bottom-4 left-4 right-4 md:left-auto md:max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50\">
-      <div className=\"flex items-start space-x-3\">
-        <div className=\"flex-shrink-0\">
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50">
+      <div className="flex items-start space-x-3">
+        <div className="flex-shrink-0">
           <svg 
-            className=\"w-8 h-8 text-blue-600\" 
-            fill=\"none\" 
-            stroke=\"currentColor\" 
-            viewBox=\"0 0 24 24\"
+            className="w-8 h-8 text-blue-600" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
           >
             <path 
-              strokeLinecap=\"round\" 
-              strokeLinejoin=\"round\" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
               strokeWidth={2} 
-              d=\"M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z\" 
+              d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" 
             />
           </svg>
         </div>
-        <div className=\"flex-1\">
-          <h3 className=\"text-sm font-medium text-gray-900 chinese-text\">
+        <div className="flex-1">
+          <h3 className="text-sm font-medium text-gray-900 chinese-text">
             安装到主屏幕
           </h3>
-          <p className=\"text-sm text-gray-600 mt-1 chinese-text\">
+          <p className="text-sm text-gray-600 mt-1 chinese-text">
             将中文分级阅读添加到主屏幕，获得更好的阅读体验。
           </p>
-          <div className=\"flex space-x-2 mt-3\">
+          <div className="flex space-x-2 mt-3">
             <button
               onClick={handleInstallClick}
-              className=\"bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors\"
+              className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors"
             >
               安装
             </button>
             <button
               onClick={handleDismiss}
-              className=\"bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-200 transition-colors\"
+              className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-200 transition-colors"
             >
               稍后
             </button>
@@ -123,13 +123,13 @@ export default function PWAInstallPrompt({ onInstall, onDismiss }: PWAInstallPro
         </div>
         <button
           onClick={handleDismiss}
-          className=\"flex-shrink-0 text-gray-400 hover:text-gray-600\"
+          className="flex-shrink-0 text-gray-400 hover:text-gray-600"
         >
-          <svg className=\"w-4 h-4\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path 
-              fillRule=\"evenodd\" 
-              d=\"M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z\" 
-              clipRule=\"evenodd\" 
+              fillRule="evenodd" 
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" 
+              clipRule="evenodd" 
             />
           </svg>
         </button>
@@ -189,4 +189,4 @@ export function usePWAStatus() {
     updateAvailable,
     refreshApp
   };
-}"
+}

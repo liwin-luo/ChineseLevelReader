@@ -3,16 +3,17 @@ import { prismaStorage } from '@/lib/prisma';
 import { createSuccessResponse, createErrorResponse, ApiError, ApiErrorType } from '@/utils/api';
 import { DifficultyLevel } from '@/types';
 
-interface RouteParams {
-  params: {
+interface RouteParamsPromise {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // GET /api/articles/[id] - 获取单个文章
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: RouteParamsPromise) {
   try {
-    const article = await prismaStorage.getArticleById(params.id);
+    const resolved = await params;
+    const article = await prismaStorage.getArticleById(resolved.id);
     
     if (!article) {
       return NextResponse.json(
@@ -34,12 +35,13 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 }
 
 // PUT /api/articles/[id] - 更新文章
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, { params }: RouteParamsPromise) {
   try {
+    const resolved = await params;
     const body = await request.json();
     
     // 检查文章是否存在
-    const existingArticle = await prismaStorage.getArticleById(params.id);
+    const existingArticle = await prismaStorage.getArticleById(resolved.id);
     if (!existingArticle) {
       return NextResponse.json(
         createErrorResponse('Article not found'),
@@ -63,7 +65,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     if (body.wordCount) updateData.wordCount = body.wordCount;
     if (body.isPublished !== undefined) updateData.isPublished = body.isPublished;
     
-    const updatedArticle = await prismaStorage.updateArticle(params.id, updateData);
+    const updatedArticle = await prismaStorage.updateArticle(resolved.id, updateData);
     
     return NextResponse.json(
       createSuccessResponse(updatedArticle, 'Article updated successfully')
@@ -78,9 +80,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 // DELETE /api/articles/[id] - 删除文章
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, { params }: RouteParamsPromise) {
   try {
-    const success = await prismaStorage.deleteArticle(params.id);
+    const resolved = await params;
+    const success = await prismaStorage.deleteArticle(resolved.id);
     
     if (!success) {
       return NextResponse.json(
