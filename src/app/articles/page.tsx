@@ -32,28 +32,29 @@ export async function generateMetadata({ searchParams }: ArticlesPageProps): Pro
 }
 
 export default async function ArticlesPage({ searchParams }: ArticlesPageProps) {
-  const resolvedSearchParams = await searchParams;
-  const currentPage = parseInt(resolvedSearchParams.page || '1');
-  const difficulty = resolvedSearchParams.difficulty as DifficultyLevel | undefined;
-  const searchTerm = resolvedSearchParams.search;
-  const tag = resolvedSearchParams.tag;
-  
-  const paginatedResult = await prismaStorage.getPaginatedArticles(
-    currentPage,
-    12,
-    'publishDate',
-    'desc',
-    {
-      difficulty,
-      searchTerm,
-      ...(tag ? { tags: [tag] } : {})
-    }
-  );
+  try {
+    const resolvedSearchParams = await searchParams;
+    const currentPage = parseInt(resolvedSearchParams.page || '1');
+    const difficulty = resolvedSearchParams.difficulty as DifficultyLevel | undefined;
+    const searchTerm = resolvedSearchParams.search;
+    const tag = resolvedSearchParams.tag;
+    
+    const paginatedResult = await prismaStorage.getPaginatedArticles(
+      currentPage,
+      12,
+      'publishDate',
+      'desc',
+      {
+        difficulty,
+        searchTerm,
+        ...(tag ? { tags: [tag] } : {})
+      }
+    );
 
-  const stats = await prismaStorage.getStatistics();
+    const stats = await prismaStorage.getStatistics();
 
   // 生成结构化数据
-  const breadcrumbs = SEOHelper.generateBreadcrumbs('/articles');
+    const breadcrumbs = SEOHelper.generateBreadcrumbs('/articles');
   const breadcrumbStructuredData = SEOHelper.generateStructuredData('breadcrumb', breadcrumbs);
 
   return (
@@ -346,6 +347,19 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
       </div>
     </>
   );
+  } catch (error) {
+    console.error('Articles page render error:', error);
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+        <div className="max-w-md w-full text-center">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h1 className="text-xl font-semibold text-gray-900 mb-2 chinese-text">加载文章失败</h1>
+          <p className="text-gray-600 chinese-text mb-6">服务器暂时不可用，请稍后重试。</p>
+          <a href="/" className="text-blue-600 hover:underline">返回首页</a>
+        </div>
+      </div>
+    );
+  }
 }
 
 // 加载骨架屏组件
