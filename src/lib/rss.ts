@@ -90,7 +90,7 @@ export class RSSService {
     return text
       .replace(/<[^>]*>/g, '') // 移除HTML标签
       .replace(/&[a-zA-Z0-9#]+;/g, ' ') // 移除HTML实体
-      .replace(/\\s+/g, ' ') // 合并多余空格
+      .replace(/\s+/g, ' ') // 合并多余空格
       .trim();
   }
 
@@ -99,12 +99,12 @@ export class RSSService {
    */
   private cleanContent(content: string): string {
     return content
-      .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '') // 移除script标签
-      .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '') // 移除style标签
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '') // 移除script标签
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '') // 移除style标签
       .replace(/<[^>]*>/g, ' ') // 移除其他HTML标签
       .replace(/&[a-zA-Z0-9#]+;/g, ' ') // 移除HTML实体
-      .replace(/\\s+/g, ' ') // 合并多余空格
-      .replace(/\n\\s*\n/g, '\n') // 合并多余换行
+      .replace(/\s+/g, ' ') // 合并多余空格
+      .replace(/\n\s*\n/g, '\n') // 合并多余换行
       .trim()
       .substring(0, 2000); // 限制长度
   }

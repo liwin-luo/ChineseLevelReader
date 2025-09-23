@@ -36,16 +36,7 @@ export default function PerformanceOptimizer() {
       images.forEach(img => imageObserver.observe(img));
     }
 
-    // Web Vitals 监控
-    if (process.env.NODE_ENV === 'production') {
-      import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-        getCLS(console.log);
-        getFID(console.log);
-        getFCP(console.log);
-        getLCP(console.log);
-        getTTFB(console.log);
-      });
-    }
+    // Web Vitals 监控（可选）：为避免构建解析依赖失败，默认关闭
 
     // 预连接到重要的第三方域名
     const preconnectDomains = [
