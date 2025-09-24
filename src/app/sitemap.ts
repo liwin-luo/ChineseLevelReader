@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error generating sitemap:', error);
     
     // 返回基础页面sitemap
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinese-level-reader.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinese-level-reader.vercel.app';
     
     return [
       {

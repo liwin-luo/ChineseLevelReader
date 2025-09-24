@@ -5,7 +5,7 @@ import { DIFFICULTY_CONFIG } from '@/constants/difficulty';
 export class SEOHelper {
   private static readonly SITE_NAME = '中文分级阅读 - Chinese Level Reader';
   private static readonly SITE_DESCRIPTION = '专为英语母语者设计的中文分级阅读平台，通过AI智能分级和双语对照，帮助您循序渐进地提高中文水平。每日更新科技新闻，支持三个难度级别。';
-  private static readonly SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinese-level-reader.com';
+  private static readonly SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://chinese-level-reader.vercel.app';
   private static readonly SITE_KEYWORDS = [
     '中文学习', 'Chinese learning', '中文分级阅读', 'Chinese graded reading',
     '双语阅读', 'bilingual reading', 'HSK', '中文新闻', 'Chinese news',
