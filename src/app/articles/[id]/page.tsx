@@ -194,7 +194,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                           <span className="text-sm font-medium text-green-700 english-text">English Translation</span>
                         </div>
                         <div className="prose prose-lg max-w-none english-text">
-                          <p className="text-gray-700 leading-relaxed text-lg italic whitespace-pre-line">
+                          <p className="text-gray-700 leading-relaxed text-lg italic whitespace-pre-line bg-green-50 p-4 rounded-lg border-l-4 border-green-200">
                             {article.translatedContent}
                           </p>
                         </div>
@@ -215,7 +215,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </p>
                   <p className="chinese-text">
                     <strong>建议学习方法：</strong>
-                    {article?.difficulty === DifficultyLevel.SIMPLE && '先读中文，遇到不懂的地方再参考英文翻译。重点关注常用词汇和基本句型。'}
+                    {article?.difficulty === DifficultyLevel.EASY && '先读中文，遇到不懂的地方再参考英文翻译。重点关注常用词汇和基本句型。'}
                     {article?.difficulty === DifficultyLevel.MEDIUM && '尝试先理解中文大意，然后对比英文翻译，注意语法结构和表达方式的差异。'}
                     {article?.difficulty === DifficultyLevel.HARD && '建议多次阅读，深入理解复杂的语法结构和专业词汇，可以做笔记记录重要表达。'}
                   </p>

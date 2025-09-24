@@ -239,7 +239,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
                               <CardDescription className="text-gray-600 text-sm mb-2 line-clamp-2 chinese-text">
                                 {article.originalContent.substring(0, 80)}...
                               </CardDescription>
-                              <CardDescription className="text-gray-500 text-xs line-clamp-2 english-text italic">
+                              <CardDescription className="text-gray-500 text-xs line-clamp-2 english-text italic bg-green-50 p-2 rounded border-l-2 border-green-200">
                                 {article.translatedContent.substring(0, 100)}...
                               </CardDescription>
                             </div>

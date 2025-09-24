@@ -23,8 +23,8 @@ export default async function Home() {
   await initializeSampleData();
   
   // 获取各难度级别的文章
-  const [simpleArticles, mediumArticles, hardArticles] = await Promise.all([
-    prismaStorage.getArticlesByDifficulty(DifficultyLevel.SIMPLE),
+  const [easyArticles, mediumArticles, hardArticles] = await Promise.all([
+    prismaStorage.getArticlesByDifficulty(DifficultyLevel.EASY),
     prismaStorage.getArticlesByDifficulty(DifficultyLevel.MEDIUM),
     prismaStorage.getArticlesByDifficulty(DifficultyLevel.HARD)
   ]);
@@ -125,7 +125,7 @@ export default async function Home() {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {Object.values(DIFFICULTY_CONFIG).map((config) => {
-              const articles = config.level === DifficultyLevel.SIMPLE ? simpleArticles :
+              const articles = config.level === DifficultyLevel.EASY ? easyArticles :
                               config.level === DifficultyLevel.MEDIUM ? mediumArticles : hardArticles;
               
               return (
@@ -135,7 +135,7 @@ export default async function Home() {
                       {config.name}
                     </div>
                     <CardTitle className="text-xl text-gray-900 mb-3 chinese-text">
-                      {config.level === DifficultyLevel.SIMPLE ? '适合初学者' :
+                      {config.level === DifficultyLevel.EASY ? '适合初学者' :
                        config.level === DifficultyLevel.MEDIUM ? '适合中级学习者' : '适合高级学习者'}
                     </CardTitle>
                   </CardHeader>
@@ -162,7 +162,7 @@ export default async function Home() {
                     <Button 
                       asChild
                       className={`w-full ${
-                        config.level === DifficultyLevel.SIMPLE ? 'bg-green-600 hover:bg-green-700' :
+                        config.level === DifficultyLevel.EASY ? 'bg-green-600 hover:bg-green-700' :
                         config.level === DifficultyLevel.MEDIUM ? 'bg-yellow-600 hover:bg-yellow-700' :
                         'bg-red-600 hover:bg-red-700'
                       }`}
@@ -189,7 +189,7 @@ export default async function Home() {
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...simpleArticles, ...mediumArticles, ...hardArticles]
+            {[...easyArticles, ...mediumArticles, ...hardArticles]
               .sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime())
               .slice(0, 6)
               .map((article) => (
@@ -218,7 +218,7 @@ export default async function Home() {
                       <p className="text-gray-600 text-sm mb-1 line-clamp-2 chinese-text">
                         {article.originalContent.substring(0, 60)}...
                       </p>
-                      <p className="text-gray-500 text-xs line-clamp-2 english-text italic">
+                      <p className="text-gray-500 text-xs line-clamp-2 english-text italic bg-green-50 p-2 rounded border-l-2 border-green-200">
                         {article.translatedContent.substring(0, 80)}...
                       </p>
                     </div>
@@ -248,7 +248,7 @@ export default async function Home() {
               <h5 className="text-lg font-semibold mb-4 chinese-text">快速链接</h5>
               <ul className="space-y-2 text-gray-300">
                 <li><Link href="/articles" className="hover:text-white transition-colors">所有文章</Link></li>
-                <li><Link href="/articles?difficulty=simple" className="hover:text-white transition-colors">简单级别</Link></li>
+                <li><Link href="/articles?difficulty=easy" className="hover:text-white transition-colors">容易级别</Link></li>
                 <li><Link href="/articles?difficulty=medium" className="hover:text-white transition-colors">中等级别</Link></li>
                 <li><Link href="/articles?difficulty=hard" className="hover:text-white transition-colors">困难级别</Link></li>
                 <li><Link href="/about" className="hover:text-white transition-colors">关于我们</Link></li>

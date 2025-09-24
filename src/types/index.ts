@@ -1,6 +1,5 @@
 // 难度级别枚举
 export enum DifficultyLevel {
-  SIMPLE = 'simple',
   EASY = 'easy',
   MEDIUM = 'medium',
   HARD = 'hard'

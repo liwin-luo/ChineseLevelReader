@@ -2,23 +2,11 @@ import { DifficultyLevel, DifficultyInfo } from '@/types';
 
 // 难度级别配置
 export const DIFFICULTY_CONFIG: Record<DifficultyLevel, DifficultyInfo> = {
-  [DifficultyLevel.SIMPLE]: {
-    level: DifficultyLevel.SIMPLE,
-    name: '简单',
-    description: '适合中文初学者，使用常用词汇和简单句式',
-    color: 'green',
-    criteria: {
-      vocabularyComplexity: 3, // 1-3 常用词汇
-      sentenceLength: 15, // 平均15个字符
-      grammarComplexity: 2, // 简单语法
-      characterCount: 500 // 大约500字符
-    }
-  },
   [DifficultyLevel.EASY]: {
     level: DifficultyLevel.EASY,
     name: '容易',
     description: '适合有一定基础的学习者，词汇和语法相对简单',
-    color: 'lightgreen',
+    color: 'green',
     criteria: {
       vocabularyComplexity: 4, // 2-4 基础词汇
       sentenceLength: 20, // 平均20个字符
@@ -64,7 +52,6 @@ export const getAllDifficultyLevels = (): DifficultyLevel[] => {
 
 // 难度级别排序
 export const DIFFICULTY_ORDER = [
-  DifficultyLevel.SIMPLE,
   DifficultyLevel.EASY,
   DifficultyLevel.MEDIUM,
   DifficultyLevel.HARD
