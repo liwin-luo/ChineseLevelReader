@@ -233,8 +233,9 @@ export class PrismaStorage {
     const total = await prisma.article.count();
     
     // 按难度统计
-    const [simpleCount, mediumCount, hardCount] = await Promise.all([
+    const [simpleCount, easyCount, mediumCount, hardCount] = await Promise.all([
       prisma.article.count({ where: { difficulty: DifficultyLevel.SIMPLE } }),
+      prisma.article.count({ where: { difficulty: DifficultyLevel.EASY } }),
       prisma.article.count({ where: { difficulty: DifficultyLevel.MEDIUM } }),
       prisma.article.count({ where: { difficulty: DifficultyLevel.HARD } })
     ]);
@@ -268,6 +269,7 @@ export class PrismaStorage {
       totalArticles: total,
       articlesByDifficulty: {
         [DifficultyLevel.SIMPLE]: simpleCount,
+        [DifficultyLevel.EASY]: easyCount,
         [DifficultyLevel.MEDIUM]: mediumCount,
         [DifficultyLevel.HARD]: hardCount
       },

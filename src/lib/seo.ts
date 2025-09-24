@@ -268,8 +268,8 @@ export class SEOHelper {
     ];
 
     const articleUrls = articles.map(article => ({
-      url: `${this.SITE_URL}/articles/${article.id}`,
-      lastModified: article.updatedAt,
+      url: `${this.SITE_URL}/articles/${article.id || ''}`,
+      lastModified: article.updatedAt || new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7
     }));

@@ -14,6 +14,18 @@ export const DIFFICULTY_CONFIG: Record<DifficultyLevel, DifficultyInfo> = {
       characterCount: 500 // 大约500字符
     }
   },
+  [DifficultyLevel.EASY]: {
+    level: DifficultyLevel.EASY,
+    name: '容易',
+    description: '适合有一定基础的学习者，词汇和语法相对简单',
+    color: 'lightgreen',
+    criteria: {
+      vocabularyComplexity: 4, // 2-4 基础词汇
+      sentenceLength: 20, // 平均20个字符
+      grammarComplexity: 3, // 基础语法
+      characterCount: 600 // 大约600字符
+    }
+  },
   [DifficultyLevel.MEDIUM]: {
     level: DifficultyLevel.MEDIUM,
     name: '中等',
@@ -53,6 +65,7 @@ export const getAllDifficultyLevels = (): DifficultyLevel[] => {
 // 难度级别排序
 export const DIFFICULTY_ORDER = [
   DifficultyLevel.SIMPLE,
+  DifficultyLevel.EASY,
   DifficultyLevel.MEDIUM,
   DifficultyLevel.HARD
 ];
