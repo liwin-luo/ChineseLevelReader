@@ -50,20 +50,22 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     .slice(0, 3);
 
   // 生成结构化数据
-  const articleStructuredData = SEOHelper.generateStructuredData('article', article);
-  const breadcrumbs = SEOHelper.generateBreadcrumbs(`/articles/${article.id}`, article);
+  const articleStructuredData = article ? SEOHelper.generateStructuredData('article', article) : null;
+  const breadcrumbs = SEOHelper.generateBreadcrumbs(`/articles/${article?.id || ''}`, article);
   const breadcrumbStructuredData = SEOHelper.generateStructuredData('breadcrumb', breadcrumbs);
 
   return (
     <>
       {/* 结构化数据 */}
-      <Script
-        id="article-structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleStructuredData)
-        }}
-      />
+      {articleStructuredData && (
+        <Script
+          id="article-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleStructuredData)
+          }}
+        />
+      )}
       <Script
         id="breadcrumb-structured-data"
         type="application/ld+json"

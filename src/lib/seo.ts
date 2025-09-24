@@ -182,29 +182,30 @@ export class SEOHelper {
       case 'article':
         if (!data) return null;
         const article = data as Article;
+        if (!article) return null;
         return {
           ...baseStructure,
-          headline: article.title,
-          description: article.content.substring(0, 200),
+          headline: article.title || '',
+          description: article.content?.substring(0, 200) || '',
           author: {
             '@type': 'Organization',
-            name: article.source
+            name: article.source || ''
           },
           publisher: {
             '@type': 'Organization',
             name: this.SITE_NAME,
             url: this.SITE_URL
           },
-          datePublished: article.publishDate.toISOString(),
-          dateModified: article.updatedAt.toISOString(),
-          url: `${this.SITE_URL}/articles/${article.id}`,
-          mainEntityOfPage: `${this.SITE_URL}/articles/${article.id}`,
+          datePublished: article.publishDate?.toISOString() || new Date().toISOString(),
+          dateModified: article.updatedAt?.toISOString() || new Date().toISOString(),
+          url: `${this.SITE_URL}/articles/${article.id || ''}`,
+          mainEntityOfPage: `${this.SITE_URL}/articles/${article.id || ''}`,
           inLanguage: 'zh-CN',
-          articleSection: DIFFICULTY_CONFIG[article.difficulty].name,
-          keywords: article.tags.join(', '),
-          wordCount: article.wordCount,
-          timeRequired: `PT${article.readingTime}M`,
-          educationalLevel: article.difficulty,
+          articleSection: DIFFICULTY_CONFIG[article.difficulty]?.name || '',
+          keywords: article.tags?.join(', ') || '',
+          wordCount: article.wordCount || 0,
+          timeRequired: `PT${article.readingTime || 0}M`,
+          educationalLevel: article.difficulty || 'simple',
           learningResourceType: 'Reading Material',
           audience: {
             '@type': 'EducationalAudience',
@@ -219,8 +220,8 @@ export class SEOHelper {
           itemListElement: data.map((item: any, index: number) => ({
             '@type': 'ListItem',
             position: index + 1,
-            name: item.name,
-            item: item.url
+            name: item.name || '',
+            item: item.url || ''
           }))
         };
 
@@ -300,12 +301,12 @@ export class SEOHelper {
       if (article) {
         const difficultyInfo = DIFFICULTY_CONFIG[article.difficulty];
         breadcrumbs.push({ 
-          name: `${difficultyInfo.name}级别`, 
-          url: `${this.SITE_URL}/articles?difficulty=${article.difficulty}` 
+          name: `${difficultyInfo?.name || ''}级别`, 
+          url: `${this.SITE_URL}/articles?difficulty=${article.difficulty || ''}` 
         });
         breadcrumbs.push({ 
-          name: article.title, 
-          url: `${this.SITE_URL}/articles/${article.id}` 
+          name: article.title || '', 
+          url: `${this.SITE_URL}/articles/${article.id || ''}` 
         });
       }
     }
