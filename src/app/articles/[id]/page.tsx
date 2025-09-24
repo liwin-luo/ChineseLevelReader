@@ -161,31 +161,46 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
             </CardHeader>
 
-            {/* 文章正文 */}
+            {/* 文章正文 - 中英文对照 */}
             <CardContent className="px-8 py-6">
-              {/* 中文内容 */}
-              <section className="mb-8 bilingual">
-                <CardTitle className="text-xl text-gray-900 mb-4 chinese-text flex items-center">
+              {/* 双语对照内容 */}
+              <section className="bilingual">
+                <CardTitle className="text-xl text-gray-900 mb-6 chinese-text flex items-center">
                   <span className="w-1 h-6 bg-blue-600 mr-3"></span>
-                  中文原文
+                  中英文对照阅读
                 </CardTitle>
-                <div className="prose prose-lg max-w-none chinese-text">
-                  <p className="text-gray-800 leading-relaxed text-lg whitespace-pre-line">
-                    {article?.originalContent || ''}
-                  </p>
-                </div>
-              </section>
-
-              {/* 英文翻译 */}
-              <section className="border-t pt-8 bilingual">
-                <CardTitle className="text-xl text-gray-900 mb-4 english-text flex items-center">
-                  <span className="w-1 h-6 bg-green-600 mr-3"></span>
-                  English Translation
-                </CardTitle>
-                <div className="prose prose-lg max-w-none english-text">
-                  <p className="text-gray-700 leading-relaxed text-lg italic whitespace-pre-line">
-                    {article?.translatedContent || ''}
-                  </p>
+                
+                {/* 段落对照显示 */}
+                <div className="space-y-8">
+                  {article?.originalContent && article?.translatedContent && (
+                    <div className="border-l-4 border-blue-100 pl-6">
+                      {/* 中文段落 */}
+                      <div className="mb-4">
+                        <div className="flex items-center mb-2">
+                          <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
+                          <span className="text-sm font-medium text-blue-700 chinese-text">中文原文</span>
+                        </div>
+                        <div className="prose prose-lg max-w-none chinese-text">
+                          <p className="text-gray-800 leading-relaxed text-lg whitespace-pre-line">
+                            {article.originalContent}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* 英文翻译 */}
+                      <div>
+                        <div className="flex items-center mb-2">
+                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                          <span className="text-sm font-medium text-green-700 english-text">English Translation</span>
+                        </div>
+                        <div className="prose prose-lg max-w-none english-text">
+                          <p className="text-gray-700 leading-relaxed text-lg italic whitespace-pre-line">
+                            {article.translatedContent}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
 

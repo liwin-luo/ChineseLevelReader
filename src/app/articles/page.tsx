@@ -224,15 +224,25 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
                               </span>
                             </div>
 
-                            {/* 文章标题 */}
-                            <CardTitle className="text-lg text-gray-900 mb-3 chinese-text line-clamp-2">
-                              {article.title}
-                            </CardTitle>
+                            {/* 文章标题 - 中英文双语 */}
+                            <div className="mb-3">
+                              <CardTitle className="text-lg text-gray-900 mb-2 chinese-text line-clamp-2">
+                                {article.title}
+                              </CardTitle>
+                              <CardTitle className="text-base text-gray-600 english-text line-clamp-2 italic">
+                                {article.title}
+                              </CardTitle>
+                            </div>
 
-                            {/* 文章摘要 */}
-                            <CardDescription className="text-gray-600 text-sm mb-4 line-clamp-3 chinese-text">
-                              {article.content.substring(0, 120)}...
-                            </CardDescription>
+                            {/* 文章摘要 - 中英文双语 */}
+                            <div className="mb-4">
+                              <CardDescription className="text-gray-600 text-sm mb-2 line-clamp-2 chinese-text">
+                                {article.originalContent.substring(0, 80)}...
+                              </CardDescription>
+                              <CardDescription className="text-gray-500 text-xs line-clamp-2 english-text italic">
+                                {article.translatedContent.substring(0, 100)}...
+                              </CardDescription>
+                            </div>
 
                             {/* 文章标签（可点击过滤） */}
                             <div className="flex flex-wrap gap-1 mb-4">

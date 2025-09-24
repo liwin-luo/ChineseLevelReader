@@ -203,12 +203,25 @@ export default async function Home() {
                         {article.readingTime} 分钟阅读
                       </span>
                     </div>
-                    <CardTitle className="text-lg text-gray-900 mb-2 chinese-text line-clamp-2">
-                      {article.title}
-                    </CardTitle>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 chinese-text">
-                      {article.content.substring(0, 100)}...
-                    </p>
+                    {/* 文章标题 - 中英文双语 */}
+                    <div className="mb-2">
+                      <CardTitle className="text-lg text-gray-900 mb-1 chinese-text line-clamp-2">
+                        {article.title}
+                      </CardTitle>
+                      <CardTitle className="text-sm text-gray-600 english-text line-clamp-2 italic">
+                        {article.title}
+                      </CardTitle>
+                    </div>
+                    
+                    {/* 文章摘要 - 中英文双语 */}
+                    <div className="mb-4">
+                      <p className="text-gray-600 text-sm mb-1 line-clamp-2 chinese-text">
+                        {article.originalContent.substring(0, 60)}...
+                      </p>
+                      <p className="text-gray-500 text-xs line-clamp-2 english-text italic">
+                        {article.translatedContent.substring(0, 80)}...
+                      </p>
+                    </div>
                     <div className="flex items-center justify-between text-xs text-gray-500">
                       <span>{article.source}</span>
                       <span>{new Date(article.publishDate).toLocaleDateString('zh-CN')}</span>
