@@ -80,7 +80,7 @@ export const calculateDifficulty = (analysis: {
   const totalScore = (vocabularyScore + lengthScore + grammarScore + sizeScore) / 4;
   
   if (totalScore <= 3.5) {
-    return DifficultyLevel.SIMPLE;
+    return DifficultyLevel.EASY;
   } else if (totalScore <= 6.5) {
     return DifficultyLevel.MEDIUM;
   } else {

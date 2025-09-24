@@ -143,7 +143,7 @@ export default async function ArticlesPage({ searchParams }: ArticlesPageProps) 
                         >
                           <Link href={`/articles?difficulty=${level}`}>
                             <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
-                              level === DifficultyLevel.SIMPLE ? 'bg-green-500' :
+                              level === DifficultyLevel.EASY ? 'bg-green-500' :
                               level === DifficultyLevel.MEDIUM ? 'bg-yellow-500' : 'bg-red-500'
                             }`}></span>
                             {DIFFICULTY_CONFIG[level].name} ({stats.articlesByDifficulty[level]})

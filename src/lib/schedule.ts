@@ -79,7 +79,7 @@ export class ScheduleService {
       const stats = await prismaStorage.getStatistics();
       console.log(
         `Total articles: ${stats.totalArticles}, ` +
-        `Simple: ${stats.articlesByDifficulty.simple}, ` +
+        `Easy: ${stats.articlesByDifficulty.easy}, ` +
         `Medium: ${stats.articlesByDifficulty.medium}, ` +
         `Hard: ${stats.articlesByDifficulty.hard}`
       );

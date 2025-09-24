@@ -12,24 +12,24 @@ export async function initializeSampleData(): Promise<void> {
 
   const now = Date.now();
   const difficulties = [
-    DifficultyLevel.SIMPLE,
+    DifficultyLevel.EASY,
     DifficultyLevel.MEDIUM,
     DifficultyLevel.HARD
   ];
 
   const makeArticle = (i: number) => {
     const difficulty = difficulties[i % difficulties.length];
-    const baseTitle = difficulty === DifficultyLevel.SIMPLE
+    const baseTitle = difficulty === DifficultyLevel.EASY
       ? '基础中文阅读'
       : difficulty === DifficultyLevel.MEDIUM
       ? '科技与社会观察'
       : '深度技术与趋势分析';
-    const zh = difficulty === DifficultyLevel.SIMPLE
+    const zh = difficulty === DifficultyLevel.EASY
       ? `第${i}篇：这是为初学者准备的短文，内容简单易懂，包含常用词汇与基本句式，便于快速阅读与理解。`
       : difficulty === DifficultyLevel.MEDIUM
       ? `第${i}篇：本文围绕当下科技与社会的联系展开，包含一定数量的复合句与常见成语表达，以提升阅读理解能力。`
       : `第${i}篇：本文从系统角度讨论前沿技术与产业趋势，涉及专业术语与较复杂的语法结构，适合进阶读者研读。`;
-    const en = difficulty === DifficultyLevel.SIMPLE
+    const en = difficulty === DifficultyLevel.EASY
       ? `No.${i}: This is a short passage for beginners with common words and simple sentences for quick reading.`
       : difficulty === DifficultyLevel.MEDIUM
       ? `No.${i}: This article discusses the relationship between technology and society, using some compound sentences and idiomatic expressions.`
@@ -47,7 +47,7 @@ export async function initializeSampleData(): Promise<void> {
       source: '示例数据',
       sourceUrl: `https://example.com/sample-${i}`,
       publishDate: new Date(now - i * 24 * 60 * 60 * 1000),
-      tags: difficulty === DifficultyLevel.SIMPLE
+      tags: difficulty === DifficultyLevel.EASY
         ? ['教育', '中文']
         : difficulty === DifficultyLevel.MEDIUM
         ? ['科技', '社会']
