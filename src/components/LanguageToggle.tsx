@@ -1,36 +1,65 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function LanguageToggle() {
-  const [lang, setLang] = useState<'zh' | 'en'>('zh');
-
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    document.documentElement.setAttribute('lang', lang === 'en' ? 'en-US' : 'zh-CN');
-    document.documentElement.classList.toggle('lang-en', lang === 'en');
-    document.documentElement.classList.toggle('lang-zh', lang !== 'en');
-    try { localStorage.setItem('lang', lang); } catch {}
-  }, [lang]);
-
-  useEffect(() => {
-    // Hydration 后再读取 localStorage，避免 SSR/CSR 不一致
-    try {
-      const stored = (localStorage.getItem('lang') as 'zh' | 'en') || 'zh';
-      setLang(stored);
-    } catch {
-      setLang('zh');
-    }
-  }, []);
-
-  const toggle = () => setLang(prev => (prev === 'zh' ? 'en' : 'zh'));
-
-  return (
-    <Button onClick={toggle} variant="outline" size="sm" title="语言 / Language">
-      {lang === 'zh' ? '中文 / EN' : 'EN / 中文'}
-    </Button>
-  );
+interface LanguageToggleProps {
+  onLanguageChange?: (view: 'both' | 'chinese' | 'english') => void;
+  defaultView?: 'both' | 'chinese' | 'english';
 }
 
+export function LanguageToggle({ onLanguageChange, defaultView = 'both' }: LanguageToggleProps) {
+  const [currentView, setCurrentView] = useState<'both' | 'chinese' | 'english'>(defaultView);
 
+  useEffect(() => {
+    if (onLanguageChange) {
+      onLanguageChange(currentView);
+    }
+  }, [currentView, onLanguageChange]);
+
+  const handleViewChange = (view: 'both' | 'chinese' | 'english') => {
+    setCurrentView(view);
+    if (onLanguageChange) {
+      onLanguageChange(view);
+    }
+  };
+
+  return (
+    <div className="flex justify-center mb-6">
+      <div className="inline-flex rounded-md shadow-sm" role="group">
+        <button
+          type="button"
+          className={`px-4 py-2 text-sm font-medium rounded-l-lg border ${
+            currentView === 'both' 
+              ? 'bg-blue-600 text-white border-blue-600' 
+              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-100'
+          }`}
+          onClick={() => handleViewChange('both')}
+        >
+          中英对照
+        </button>
+        <button
+          type="button"
+          className={`px-4 py-2 text-sm font-medium border-t border-b ${
+            currentView === 'chinese' 
+              ? 'bg-blue-600 text-white border-blue-600' 
+              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-100'
+          }`}
+          onClick={() => handleViewChange('chinese')}
+        >
+          仅中文
+        </button>
+        <button
+          type="button"
+          className={`px-4 py-2 text-sm font-medium rounded-r-lg border ${
+            currentView === 'english' 
+              ? 'bg-blue-600 text-white border-blue-600' 
+              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-100'
+          }`}
+          onClick={() => handleViewChange('english')}
+        >
+          仅英文
+        </button>
+      </div>
+    </div>
+  );
+}

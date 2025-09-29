@@ -67,6 +67,7 @@ export interface TranslationResponse {
   fromLanguage: string;
   toLanguage: string;
   confidence: number; // 翻译置信度 (0-1)
+  category?: string[]; // 文章分类标签
 }
 
 // 文章分析结果

@@ -82,12 +82,16 @@ export class MockKimiTranslationService implements ITranslationService {
     console.log('Kimi API response:', data);
     const translatedText = data.choices[0]?.message?.content || '';
 
+    // 提取文章分类标签
+    const categories = this.extractCategories(request.text);
+    
     return {
       translatedText: this.cleanTranslatedText(translatedText),
       originalText: request.text,
       fromLanguage: request.fromLanguage,
       toLanguage: request.toLanguage,
-      confidence: 0.9 // Kimi通常有较高的翻译质量
+      confidence: 0.9, // Kimi通常有较高的翻译质量
+      category: categories
     };
   }
 
@@ -117,6 +121,40 @@ export class MockKimiTranslationService implements ITranslationService {
   }
 
   /**
+   * 从文本中提取分类标签
+   */
+  private extractCategories(text: string): string[] {
+    const categories: string[] = [];
+    
+    // 定义关键词分类映射
+    const categoryKeywords: Record<string, RegExp> = {
+      '人工智能': /人工智能|AI|机器学习|深度学习|神经网络|算法|模型/g,
+      '科技公司': /苹果|微软|特斯拉|字节跳动|腾讯|阿里巴巴|百度|华为|小米/g,
+      '硬件技术': /芯片|半导体|处理器|手机|电脑|设备/g,
+      '互联网': /云计算|云服务|服务器|网络|5G|6G/g,
+      '新兴技术': /区块链|比特币|加密货币|元宇宙|VR|AR|量子/g,
+      '生物科技': /生物技术|基因|医疗|健康/g,
+      '新能源': /新能源|电池|充电|电动车/g,
+      '机器人': /机器人|自动化|智能制造/g,
+      '游戏娱乐': /游戏|电竞|娱乐/g
+    };
+    
+    // 检查文本匹配的分类
+    Object.entries(categoryKeywords).forEach(([category, pattern]) => {
+      if (pattern.test(text)) {
+        categories.push(category);
+      }
+    });
+    
+    // 如果没有匹配到特定分类，使用默认分类
+    if (categories.length === 0) {
+      categories.push('科技');
+    }
+    
+    return categories;
+  }
+
+  /**
    * 模拟翻译实现
    */
   private async mockTranslate(request: TranslationRequest): Promise<TranslationResponse> {
@@ -136,12 +174,16 @@ export class MockKimiTranslationService implements ITranslationService {
       confidence = 0.7;
     }
 
+    // 提取文章分类标签
+    const categories = this.extractCategories(text);
+    
     return {
       translatedText,
       originalText: text,
       fromLanguage,
       toLanguage,
-      confidence
+      confidence,
+      category: categories
     };
   }
 

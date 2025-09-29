@@ -114,7 +114,7 @@ body {
 .lang-en .bilingual .chinese-text { display: none; }
 
 /* 难度级别标签 */
-.difficulty-simple {
+.difficulty-easy {
   @apply bg-green-100 text-green-800 border-green-200;
 }
 

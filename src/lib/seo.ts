@@ -10,7 +10,9 @@ export class SEOHelper {
     '中文学习', 'Chinese learning', '中文分级阅读', 'Chinese graded reading',
     '双语阅读', 'bilingual reading', 'HSK', '中文新闻', 'Chinese news',
     '英语学习中文', 'English to Chinese', '科技新闻', 'tech news',
-    '人工智能翻译', 'AI translation', '中文练习', 'Chinese practice'
+    '人工智能翻译', 'AI translation', '中文练习', 'Chinese practice',
+    'Mandarin learning', 'graded Chinese reading', 'Chinese language learning',
+    'bilingual content', 'language education', 'Chinese proficiency'
   ];
 
   /**
@@ -127,8 +129,8 @@ export class SEOHelper {
    */
   static generateArticleMeta(article: Article) {
     const difficultyInfo = DIFFICULTY_CONFIG[article.difficulty];
-    const title = article.title;
-    const description = `${difficultyInfo.name}级别中文文章：${article.content.substring(0, 150)}... 包含英文翻译和学习提示，阅读时间约${article.readingTime}分钟。`;
+    const title = `${article.title} - 中文分级阅读`;
+    const description = `${difficultyInfo.name}级别中文文章：${article.content.substring(0, 150)}... 包含英文翻译和学习提示，阅读时间约${article.readingTime}分钟。Graded Chinese reading material with English translation for language learners.`;
     
     const keywords = [
       ...article.tags,
@@ -136,6 +138,10 @@ export class SEOHelper {
       `${article.difficulty} level`,
       '中英文对照',
       'bilingual reading',
+      'Chinese learning',
+      'Mandarin practice',
+      'graded reader',
+      'language education',
       article.source
     ];
 
@@ -186,7 +192,7 @@ export class SEOHelper {
         return {
           ...baseStructure,
           headline: article.title || '',
-          description: article.content?.substring(0, 200) || '',
+          description: `${article.content?.substring(0, 200) || ''}... Graded Chinese reading material with English translation for language learners.`,
           author: {
             '@type': 'Organization',
             name: article.source || ''
@@ -200,9 +206,9 @@ export class SEOHelper {
           dateModified: article.updatedAt?.toISOString() || new Date().toISOString(),
           url: `${this.SITE_URL}/articles/${article.id || ''}`,
           mainEntityOfPage: `${this.SITE_URL}/articles/${article.id || ''}`,
-          inLanguage: 'zh-CN',
-          articleSection: DIFFICULTY_CONFIG[article.difficulty]?.name || '',
-          keywords: article.tags?.join(', ') || '',
+          inLanguage: ['zh-CN', 'en-US'],
+          articleSection: `${DIFFICULTY_CONFIG[article.difficulty]?.name || ''} Level Chinese Reading`,
+          keywords: `${article.tags?.join(', ') || ''}, Chinese learning, Mandarin practice, bilingual reading`,
           wordCount: article.wordCount || 0,
           timeRequired: `PT${article.readingTime || 0}M`,
           educationalLevel: article.difficulty || 'simple',
@@ -210,6 +216,12 @@ export class SEOHelper {
           audience: {
             '@type': 'EducationalAudience',
             educationalRole: 'student'
+          },
+          // 添加英文版本信息
+          hasPart: {
+            '@type': 'Article',
+            inLanguage: 'en-US',
+            description: article.translatedContent?.substring(0, 200) || ''
           }
         };
 

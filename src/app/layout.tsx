@@ -5,7 +5,7 @@ import Analytics from '@/components/Analytics';
 import PerformanceOptimizer from '@/components/PerformanceOptimizer';
 import { initializeCache } from '@/lib/cache';
 import Script from 'next/script';
-import LanguageToggle from '@/components/LanguageToggle';
+import { LanguageToggle } from '@/components/LanguageToggle';
 import "./globals.css";
 
 // 优化字体加载
