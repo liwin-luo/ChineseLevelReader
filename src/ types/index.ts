@@ -22,5 +22,4 @@ export interface Article {
   readingTime: number; // 预估阅读时间（分钟）
   wordCount: number; // 字数统计
   isPublished: boolean;
-  hotScore?: number; // 文章热度分数
 }

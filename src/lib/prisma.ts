@@ -35,8 +35,7 @@ export class PrismaStorage {
       readingTime: articleData.readingTime,
       wordCount: articleData.wordCount,
       isPublished: articleData.isPublished,
-      tags: JSON.stringify(articleData.tags),
-      hotScore: articleData.hotScore ?? 0
+      tags: JSON.stringify(articleData.tags)
     };
 
     const result = await prisma.article.create({ data });
@@ -102,7 +101,7 @@ export class PrismaStorage {
   async getPaginatedArticles(
     page: number = 1,
     limit: number = 12,
-    sortBy: 'publishDate' | 'difficulty' | 'readingTime' | 'hotScore' = 'publishDate',
+    sortBy: 'publishDate' | 'difficulty' | 'readingTime' = 'publishDate',
     sortOrder: 'asc' | 'desc' = 'desc',
     filters?: {
       difficulty?: DifficultyLevel;
@@ -201,7 +200,6 @@ export class PrismaStorage {
     if (updates.wordCount !== undefined) updateData.wordCount = updates.wordCount;
     if (updates.isPublished !== undefined) updateData.isPublished = updates.isPublished;
     if (updates.tags !== undefined) updateData.tags = JSON.stringify(updates.tags);
-    if (updates.hotScore !== undefined) updateData.hotScore = updates.hotScore;
 
     const article = await prisma.article.update({
       where: { id },
@@ -299,8 +297,7 @@ export class PrismaStorage {
       readingTime: prismaArticle.readingTime,
       wordCount: prismaArticle.wordCount,
       isPublished: prismaArticle.isPublished,
-      tags: JSON.parse(prismaArticle.tags || '[]'),
-      hotScore: prismaArticle.hotScore ?? 0
+      tags: JSON.parse(prismaArticle.tags || '[]')
     };
   }
 

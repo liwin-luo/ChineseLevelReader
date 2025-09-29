@@ -14,13 +14,7 @@ export async function GET() {
     
     // 简化的热度算法：基于发布时间和阅读时间
     for (const article of allArticles) {
-      const ageInDays = (Date.now() - new Date(article.publishDate).getTime()) / (1000 * 60 * 60 * 24);
-      const decayFactor = Math.max(0.1, 1 - (ageInDays / 30)); // 30天衰减到10%
-      const hotScore = Math.floor((article.readingTime || 1) * decayFactor * 100);
-      
-      // 更新文章热度分数（需要扩展 Article 模型以支持 hotScore 字段）
-      // 暂时记录日志，实际应用中需要更新数据库
-      console.log(`Article ${article.id} hot score updated to ${hotScore}`);
+      // 热度计算逻辑已移除
     }
     
     const duration = Date.now() - startTime;

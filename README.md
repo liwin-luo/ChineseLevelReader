@@ -52,9 +52,13 @@ Article detail page includes a bookmark toggle (localStorage key: `bookmarks`).
 1. Set environment variables in Vercel:
    - `NEXT_PUBLIC_SITE_URL` = your domain (e.g. https://example.com)
    - `KIMI_API_KEY` (optional; dev uses mock)
+   - `DATABASE_URL` = your Supabase PostgreSQL connection string
 2. Configure Vercel Cron to hit the cron endpoints listed above.
 3. Build & Deploy. Pages use ISR (`revalidate=86400`) for home, list, and article pages.
 4. Submit `sitemap.xml` to search engines after first deploy.
+5. Run database migrations on Supabase:
+   - Use Prisma migrations or execute the SQL scripts in the `prisma/migrations` directory
+   - You can run these in the Supabase SQL editor
 
 ## Getting Started
 

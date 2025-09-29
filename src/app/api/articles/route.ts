@@ -63,8 +63,7 @@ export async function POST(request: NextRequest) {
       tags: body.tags || [],
       readingTime: body.readingTime || 5,
       wordCount: body.wordCount || body.content.length,
-      isPublished: body.isPublished !== undefined ? body.isPublished : true,
-      hotScore: body.hotScore || 0
+      isPublished: body.isPublished !== undefined ? body.isPublished : true
     };
     
     const article = await prismaStorage.createArticle(articleData);

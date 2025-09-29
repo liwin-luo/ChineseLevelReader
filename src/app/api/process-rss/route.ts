@@ -66,8 +66,7 @@ export async function POST(request: NextRequest) {
           readingTime: 5, // 初始值，后续可以重新计算
           wordCount: 0, // 初始值，后续可以重新计算
           isPublished: true,
-          tags: ['rss', 'imported'],
-          hotScore: 0 // 初始热度分数
+          tags: ['rss', 'imported']
         });
         
         processedArticles.push(article);

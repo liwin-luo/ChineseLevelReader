@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Article {
@@ -26,8 +26,6 @@ model Article {
   wordCount         Int
   isPublished       Boolean         @default(true)
   tags              String          // JSON string of tags array
-  hotScore          Int             @default(0) // 文章热度分数
-
   @@map("articles")
 }
 
