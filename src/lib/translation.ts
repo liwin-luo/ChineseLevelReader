@@ -12,20 +12,26 @@ export class MockKimiTranslationService implements ITranslationService {
 
   constructor(apiKey: string = 'mock-api-key') {
     this.apiKey = apiKey;
-    this.baseUrl = 'https://api.moonshot.cn/v1'; // Kimi API 的实际地址
+    this.baseUrl = process.env.KIMI_API_BASE_URL || 'https://api.moonshot.cn/v1'; // Kimi API 的实际地址
   }
 
   /**
    * 翻译文本（模拟实现）
    */
   async translate(request: TranslationRequest): Promise<TranslationResponse> {
+    console.log('Translation request:', request);
+    console.log('API Key:', this.apiKey);
+    console.log('Base URL:', this.baseUrl);
+    
     // 在开发环境中使用模拟翻译
-    if (process.env.NODE_ENV === 'development' || !this.apiKey.startsWith('sk-')) {
+    if (process.env.NODE_ENV === 'development' && !this.apiKey.startsWith('sk-')) {
+      console.log('Using mock translation in development');
       return this.mockTranslate(request);
     }
 
     // 生产环境中的实际API调用
     try {
+      console.log('Calling real Kimi API');
       const response = await this.callKimiAPI(request);
       return response;
     } catch (error) {
@@ -40,6 +46,8 @@ export class MockKimiTranslationService implements ITranslationService {
    */
   private async callKimiAPI(request: TranslationRequest): Promise<TranslationResponse> {
     const prompt = this.buildTranslationPrompt(request);
+    
+    console.log('Calling Kimi API with prompt:', prompt);
     
     const apiResponse = await fetch(`${this.baseUrl}/chat/completions`, {
       method: 'POST',
@@ -65,10 +73,13 @@ export class MockKimiTranslationService implements ITranslationService {
     });
 
     if (!apiResponse.ok) {
-      throw new Error(`Kimi API error: ${apiResponse.status}`);
+      const errorText = await apiResponse.text();
+      console.error('Kimi API error response:', errorText);
+      throw new Error(`Kimi API error: ${apiResponse.status} - ${errorText}`);
     }
 
     const data = await apiResponse.json();
+    console.log('Kimi API response:', data);
     const translatedText = data.choices[0]?.message?.content || '';
 
     return {
@@ -100,8 +111,8 @@ export class MockKimiTranslationService implements ITranslationService {
    */
   private cleanTranslatedText(text: string): string {
     return text
-      .replace(/^\\s*翻译[：:]/gm, '') // 移除开头的\"翻译：\"
-      .replace(/^\\s*Translation[：:]/gm, '') // 移除开头的\"Translation:\"
+      .replace(/^\s*翻译[：:]/gm, '') // 移除开头的"翻译："
+      .replace(/^\s*Translation[：:]/gm, '') // 移除开头的"Translation:"
       .trim();
   }
 
@@ -267,7 +278,7 @@ export class MockKimiTranslationService implements ITranslationService {
    */
   detectLanguage(text: string): 'zh' | 'en' | 'unknown' {
     // 简单的语言检测
-    const chinesePattern = /[\\u4e00-\\u9fff]/;
+    const chinesePattern = /[\u4e00-\u9fff]/;
     const englishPattern = /[a-zA-Z]/;
     
     const hasChinese = chinesePattern.test(text);

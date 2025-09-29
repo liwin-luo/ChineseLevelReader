@@ -22,6 +22,7 @@ export interface Article {
   readingTime: number; // 预估阅读时间（分钟）
   wordCount: number; // 字数统计
   isPublished: boolean;
+  hotScore: number; // 文章热度分数
 }
 
 // 难度级别详细信息
@@ -98,7 +99,7 @@ export interface SearchFilters {
 export interface PaginationParams {
   page: number;
   limit: number;
-  sortBy?: 'publishDate' | 'difficulty' | 'readingTime';
+  sortBy?: 'publishDate' | 'difficulty' | 'readingTime' | 'hotScore';
   sortOrder?: 'asc' | 'desc';
 }
 

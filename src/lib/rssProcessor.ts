@@ -43,7 +43,8 @@ export class RSSToArticleService {
       tags: this.extractTags(content),
       readingTime: analysis.readingTime,
       wordCount: analysis.wordCount,
-      isPublished: true
+      isPublished: true,
+      hotScore: 0 // 默认热度分数
     };
     
     return await prismaStorage.createArticle(article);

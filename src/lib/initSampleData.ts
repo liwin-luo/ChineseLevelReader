@@ -54,7 +54,8 @@ export async function initializeSampleData(): Promise<void> {
         : ['技术', '趋势', '研究'],
       readingTime,
       wordCount: characterCount,
-      isPublished: true
+      isPublished: true,
+      hotScore: 0 // 默认热度分数
     };
   };
 

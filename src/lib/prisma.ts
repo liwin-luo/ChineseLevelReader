@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { Article, DifficultyLevel } from '@/types';
 import { calculateDifficulty } from '@/constants/difficulty';
 import { countCharacters, countSentences } from '@/utils/api';
@@ -22,22 +22,24 @@ export class PrismaStorage {
    * 创建文章
    */
   async createArticle(articleData: Omit<Article, 'id' | 'createdAt' | 'updatedAt'>): Promise<Article> {
-    const result = await prisma.article.create({
-      data: {
-        title: articleData.title,
-        content: articleData.content,
-        originalContent: articleData.originalContent,
-        translatedContent: articleData.translatedContent,
-        difficulty: articleData.difficulty,
-        source: articleData.source,
-        sourceUrl: articleData.sourceUrl,
-        publishDate: articleData.publishDate,
-        readingTime: articleData.readingTime,
-        wordCount: articleData.wordCount,
-        isPublished: articleData.isPublished,
-        tags: JSON.stringify(articleData.tags)
-      }
-    });
+    // 使用类型断言来处理类型不匹配问题
+    const data: any = {
+      title: articleData.title,
+      content: articleData.content,
+      originalContent: articleData.originalContent,
+      translatedContent: articleData.translatedContent,
+      difficulty: articleData.difficulty,
+      source: articleData.source,
+      sourceUrl: articleData.sourceUrl,
+      publishDate: articleData.publishDate,
+      readingTime: articleData.readingTime,
+      wordCount: articleData.wordCount,
+      isPublished: articleData.isPublished,
+      tags: JSON.stringify(articleData.tags),
+      hotScore: articleData.hotScore ?? 0
+    };
+
+    const result = await prisma.article.create({ data });
 
     return this.formatArticle(result);
   }
@@ -100,7 +102,7 @@ export class PrismaStorage {
   async getPaginatedArticles(
     page: number = 1,
     limit: number = 12,
-    sortBy: 'publishDate' | 'difficulty' | 'readingTime' = 'publishDate',
+    sortBy: 'publishDate' | 'difficulty' | 'readingTime' | 'hotScore' = 'publishDate',
     sortOrder: 'asc' | 'desc' = 'desc',
     filters?: {
       difficulty?: DifficultyLevel;
@@ -183,6 +185,7 @@ export class PrismaStorage {
    * 更新文章
    */
   async updateArticle(id: string, updates: Partial<Article>): Promise<Article | null> {
+    // 使用类型断言来处理类型不匹配问题
     const updateData: any = {};
     
     // 只更新提供的字段
@@ -198,6 +201,7 @@ export class PrismaStorage {
     if (updates.wordCount !== undefined) updateData.wordCount = updates.wordCount;
     if (updates.isPublished !== undefined) updateData.isPublished = updates.isPublished;
     if (updates.tags !== undefined) updateData.tags = JSON.stringify(updates.tags);
+    if (updates.hotScore !== undefined) updateData.hotScore = updates.hotScore;
 
     const article = await prisma.article.update({
       where: { id },
@@ -295,7 +299,8 @@ export class PrismaStorage {
       readingTime: prismaArticle.readingTime,
       wordCount: prismaArticle.wordCount,
       isPublished: prismaArticle.isPublished,
-      tags: JSON.parse(prismaArticle.tags || '[]')
+      tags: JSON.parse(prismaArticle.tags || '[]'),
+      hotScore: prismaArticle.hotScore ?? 0
     };
   }
 

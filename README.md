@@ -1,17 +1,38 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Cron (Daily RSS Sync)
+## Cron Jobs
 
-An endpoint `GET /api/cron/daily` is available for Vercel Cron to trigger daily RSS → Article sync.
+This project includes several cron jobs for automated tasks:
 
-Configure in Vercel:
+### Daily Task (`/api/cron/daily`)
+- **Schedule**: `0 9 * * *` (每天上午9点)
+- **Function**: RSS同步，获取最新文章
+- **Test**: `http://localhost:3000/api/cron/daily`
+
+### Weekly Task (`/api/cron/weekly`)
+- **Schedule**: `0 10 * * 1` (每周一上午10点)
+- **Function**: 生成周统计报告
+- **Test**: `http://localhost:3000/api/cron/weekly`
+
+### Monthly Task (`/api/cron/monthly`)
+- **Schedule**: `0 11 1 * *` (每月1日上午11点)
+- **Function**: 清理30天前的旧文章
+- **Test**: `http://localhost:3000/api/cron/monthly`
+
+### Hourly Task (`/api/cron/hourly`)
+- **Schedule**: `0 * * * *` (每小时)
+- **Function**: 更新文章热度分数
+- **Test**: `http://localhost:3000/api/cron/hourly`
+
+### Configure in Vercel:
 
 1. Project Settings → Cron Jobs → Add Cron Job
-2. Schedule: `0 0 * * *` (daily 00:00 UTC)
-3. Endpoint: `/api/cron/daily`
-4. Method: `GET`
+2. Use the schedules and endpoints listed above
+3. Method: `GET` or `POST`
 
-Local test: `http://localhost:3000/api/cron/daily`
+### Local Testing
+
+Visit `http://localhost:3000/test-cron` to test all cron jobs manually.
 
 ## Environment Variables
 
@@ -23,17 +44,17 @@ KIMI_API_KEY=mock-api-key
 ```
 
 ## Bookmarks
+
+Article detail page includes a bookmark toggle (localStorage key: `bookmarks`).
+
 ## Production Deploy
 
 1. Set environment variables in Vercel:
    - `NEXT_PUBLIC_SITE_URL` = your domain (e.g. https://example.com)
    - `KIMI_API_KEY` (optional; dev uses mock)
-2. Configure Vercel Cron to hit `/api/cron/daily` daily.
+2. Configure Vercel Cron to hit the cron endpoints listed above.
 3. Build & Deploy. Pages use ISR (`revalidate=86400`) for home, list, and article pages.
 4. Submit `sitemap.xml` to search engines after first deploy.
-
-
-Article detail page includes a bookmark toggle (localStorage key: `bookmarks`).
 
 ## Getting Started
 
