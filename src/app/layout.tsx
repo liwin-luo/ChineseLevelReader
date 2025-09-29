@@ -59,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${inter.variable} ${notoSansSC.variable} lang-zh`}>
+    <html lang="zh-CN" className={`${inter.variable} ${notoSansSC.variable}`}>
       <head>
         {/* DNS Prefetch for external resources */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

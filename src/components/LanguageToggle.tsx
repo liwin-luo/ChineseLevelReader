@@ -11,6 +11,17 @@ export function LanguageToggle({ onLanguageChange, defaultView = 'both' }: Langu
   const [currentView, setCurrentView] = useState<'both' | 'chinese' | 'english'>(defaultView);
 
   useEffect(() => {
+    // 更新根元素的类名以控制语言显示
+    const root = document.documentElement;
+    root.classList.remove('lang-zh', 'lang-en');
+    
+    if (currentView === 'chinese') {
+      root.classList.add('lang-zh');
+    } else if (currentView === 'english') {
+      root.classList.add('lang-en');
+    }
+    // 对于 'both' 情况，不添加特定的语言类，显示所有内容
+    
     if (onLanguageChange) {
       onLanguageChange(currentView);
     }

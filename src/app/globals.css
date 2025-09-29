@@ -109,9 +109,22 @@ body {
   font-family: 'Inter', 'Roboto', system-ui, sans-serif;
 }
 
-/* 语言显示控制（仅在 .bilingual 区域内切换；未标注区域保持中文兜底） */
-.lang-zh .bilingual .english-text { display: none; }
-.lang-en .bilingual .chinese-text { display: none; }
+/* 语言显示控制 */
+/* 默认显示中英文内容 */
+.bilingual .chinese-text,
+.bilingual .english-text {
+  display: block;
+}
+
+/* 仅显示中文 */
+.lang-zh .bilingual .english-text {
+  display: none !important;
+}
+
+/* 仅显示英文 */
+.lang-en .bilingual .chinese-text {
+  display: none !important;
+}
 
 /* 难度级别标签 */
 .difficulty-easy {
