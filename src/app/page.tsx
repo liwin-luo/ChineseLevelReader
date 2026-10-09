@@ -62,6 +62,9 @@ export default async function Home() {
               <Link href="/articles" className="text-gray-700 hover:text-blue-600 transition-colors">
                 所有文章
               </Link>
+              <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors">
+                博客
+              </Link>
               <Link href="/bookmarks" className="text-gray-700 hover:text-blue-600 transition-colors">
                 我的收藏
               </Link>
@@ -248,6 +251,7 @@ export default async function Home() {
               <h5 className="text-lg font-semibold mb-4 chinese-text">快速链接</h5>
               <ul className="space-y-2 text-gray-300">
                 <li><Link href="/articles" className="hover:text-white transition-colors">所有文章</Link></li>
+                <li><Link href="/blog" className="hover:text-white transition-colors">博客</Link></li>
                 <li><Link href="/articles?difficulty=easy" className="hover:text-white transition-colors">容易级别</Link></li>
                 <li><Link href="/articles?difficulty=medium" className="hover:text-white transition-colors">中等级别</Link></li>
                 <li><Link href="/articles?difficulty=hard" className="hover:text-white transition-colors">困难级别</Link></li>
